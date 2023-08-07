@@ -1,9 +1,3 @@
-
-# coding: utf-8
-
-# In[ ]:
-
-
 import os 
 import h5py 
 import sklearn 
@@ -17,18 +11,16 @@ from sklearn.decomposition import PCA
 from sklearn.cluster import AgglomerativeClustering
 from sklearn.cluster import KMeans
 from sklearn import metrics
-%matplotlib inline
-%load_ext autoreload 
-%autoreload 2 
+
 from imputation import *
 
 # We input the preprocessed data. 
-rawdata=pd.read_csv('./data/',sep='\t',header=None,index_col=None)
-data_norm = rawdata.values  
+rawdata=pd.read_csv('scaled_counts.csv',sep='\t',header=0,index_col=0)
+data_norm = rawdata.values.T
 data_norm1 = data_norm.copy()
 
 # We set the number of cluster by calculating the silhouette coefficient. 
-label_path = "./label/"
+label_path = "label.csv"
 label = np.loadtxt(label_path, delimiter='\t')
 
 #pca
@@ -96,10 +88,9 @@ X_imputed = map(partial(imputation_for_cell,
 
 X_imputed = np.array(list(X_imputed)).T
 data_imputed = data_norm1 + (data_identi==-1).T * X_imputed.T
+
+df_imputed = pd.DataFrame(data_imputed)
+df_imputed.to_csv('imputed_counts.csv', sep='\t')
+
 ed = datetime.datetime.now()
 (ed - st).total_seconds()
-
-
-
-
-
