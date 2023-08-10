@@ -15,8 +15,8 @@ from sklearn import metrics
 from imputation import *
 
 # We input the preprocessed data. 
-rawdata=pd.read_csv('scaled_counts.csv',sep='\t',header=0,index_col=0)
-data_norm = rawdata.values.T
+rawdata=pd.read_csv('scaled_counts.csv',sep='\t',header=None,index_col=None)
+data_norm = rawdata.values
 data_norm1 = data_norm.copy()
 
 # We set the number of cluster by calculating the silhouette coefficient. 
@@ -32,9 +32,12 @@ print(pca_data.shape)
 
 #K-means
 clusters=len(np.unique(label))
+print('clusters:',clusters)
 kmeans = KMeans(n_clusters=clusters, random_state=0).fit(pca_data)
 label_pr =  kmeans.labels_
-
+print('label_pr:',label_pr)
+print('length:',len(label_pr))
+np.savetxt('label2.csv', label_pr, fmt='%0.5f', delimiter='\t', header='label')
 
 #The identification of dropout events
 st = datetime.datetime.now()

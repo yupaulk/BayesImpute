@@ -11,15 +11,15 @@ from sklearn.cluster import KMeans
 input_path = "scaled_counts.csv"
 # input = pd.read_csv(input_path,sep='\t',index_col=0)
 # input = input.T
-input = pd.read_csv(input_path,sep='\t',header=0,index_col=0)
-input = input.T
+input = pd.read_csv(input_path,sep='\t',header=None,index_col=None)
+input = input
 
-label_path = "label.csv"
-y_true = np.loadtxt(label_path, delimiter='\t')
+label_path = "label2.csv"
+y_true = np.loadtxt(label_path, delimiter='\t',skiprows=1)
 
 
 imputedData=pd.read_csv('imputed_counts.csv',sep='\t',header=0,index_col=0)
-imputedData=imputedData.T
+imputedData=imputedData
 print(input.shape,imputedData.shape,y_true.shape,imputedData.head())
 
 
