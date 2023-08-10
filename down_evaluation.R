@@ -33,20 +33,22 @@ for (i in 1:method_number){
     if (method[i] == 'downsample_lognorm'){
      
       data_imp_dir = paste('./',method[i],'/',dataset[ii],'.csv',sep='')
-      data_imp=read.csv(data_imp_dir, header = T, row.names = 1)
+      data_imp=read.csv(data_imp_dir, sep='\t', header = T, row.names = 1)
     }
     else{
       data_imp_dir = paste('./',method[i],'/',dataset[ii],'_imputed.csv',sep='')
-      data_imp=read.csv(data_imp_dir, header = T, row.names = 1)
+      data_imp=read.csv(data_imp_dir, sep='\t', header = T, row.names = 1)
     
     }
     data_ref_dir=paste('./','baron','_ref.csv',sep='')
-    data_ref=read.csv(data_ref_dir, header = T, row.names = 1)
+    data_ref=read.csv(data_ref_dir, sep='\t', header = T, row.names = 1)
     data_ref<-log(normalizeData(data_ref)+1)
     data_imp=as.matrix(data_imp)
     data_ref=as.matrix(data_ref)
     
     #calculate gene_wise correlation
+    print(dim(data_ref))
+    print(dim(data_imp))
     gene_cor<-get.cor.gene(data_ref, data_imp)
     gene_cor_mean<-mean(gene_cor)
     #gene_cor_list[[method[i]]]<-append(gene_cor_list[[method[i]]],gene_cor_list)

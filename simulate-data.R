@@ -17,5 +17,6 @@ sim <- splatSimulateGroups(params, verbose = TRUE)
 simcounts <- counts(sim)
 simnorm <- log(normalizeData(simcounts)+1)
 
+write.table(simcounts, file='raw_counts.csv', quote=FALSE, sep='\t', col.names = NA)
 write.table(simnorm, file='scaled_counts.csv', quote=FALSE, sep='\t', col.names = NA)
 write.table(sim$Group, file='label.csv', quote=FALSE, sep='\t', col.names = NA)
